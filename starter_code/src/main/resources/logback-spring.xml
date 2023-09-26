@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="Console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{10}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="socket" class="com.splunk.logging.TcpAppender">
+        <RemoteHost>127.0.0.1</RemoteHost>
+        <Port>1500</Port>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeCallerData>true</includeCallerData>
+        </encoder>
+<!--        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+<!--            <pattern>%thread %level %C{10}: %msg%n</pattern>-->
+<!--        </encoder>-->
+    </appender>
+
+<!--    <Appender name="http" class="com.splunk.logging.HttpEventCollectorLogbackAppender">-->
+<!--        <url>http://localhost:8088</url>-->
+<!--        <token>1f8f1a94-0012-4cc6-99d6-54fbda343d94</token>-->
+<!--        <index>ecommerce_service</index>-->
+<!--        <source>http-event-log4j</source>-->
+<!--        <sourcetype>log4j</sourcetype>-->
+<!--        <messageFormat>text</messageFormat>-->
+<!--        <middleware>HttpEventCollectorUnitTestMiddleware</middleware>-->
+<!--        <connectTimeout>5000</connectTimeout>-->
+<!--        <disableCertificateValidation>true</disableCertificateValidation>-->
+<!--        <layout class="ch.qos.logback.classic.PatternLayout">-->
+<!--            <pattern>%m</pattern>-->
+<!--        </layout>-->
+<!--    </Appender>-->
+
+    <root level="info">
+        <appender-ref ref="Console" />
+        <appender-ref ref="socket" />
+    </root>
+    <logger name ="com.example.demo" level="info">
+        <appender-ref ref="socket" />
+    </logger>
+</configuration>
