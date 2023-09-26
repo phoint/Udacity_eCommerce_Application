@@ -8,6 +8,7 @@ import com.example.demo.model.persistence.repositories.OrderRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
 import com.example.demo.model.requests.ModifyCartRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -37,6 +39,8 @@ public class OrderControllerTest {
 
     @Mock
     private OrderRepository orderRepository;
+    @Mock
+    private ObjectMapper mapper;
 
     private final String USERNAME = "phoint";
     private User user;
@@ -66,6 +70,7 @@ public class OrderControllerTest {
         cart.setUser(user);
 
         user.setCart(cart);
+        userOrder = UserOrder.createFromCart(cart);
     }
 
     @Test
